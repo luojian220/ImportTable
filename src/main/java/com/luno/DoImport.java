@@ -50,7 +50,7 @@ public class DoImport {
 			String content = FileUtil.readString1(readerFileName);
 			List<Object> readerList = Generate.genReaderInfo(content);
 			DataImportUtils dataImportUtils = new DataImportUtils();
-			DbUtils dbUtils = new DbUtils(1626,"192.168.10.19","sxlib","apimanager","dfdre$da0cber42Odc");
+			DbUtils dbUtils = new DbUtils(1626,"192.168.10.19","sxlib","apimanager","");
 			dataImportUtils.executeImport("READER_INFO",readerList,dbUtils);
 			dbUtils.close();
 		}

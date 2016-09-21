@@ -149,7 +149,7 @@ public class DataImportUtils {
     public static void main(String[] args){
 
         DataImportUtils dataImportUtils = new DataImportUtils();
-        DbUtils dbUtils = new DbUtils(1626,"192.168.10.19","sxlib","apimanager","dfdre$da0cber42Odc");
+        DbUtils dbUtils = new DbUtils(1626,"192.168.10.19","sxlib","apimanager","");
         List<Object> list = new ArrayList<>();
         list.add(new ReaderInfo("000000000",null,"建筑系","1","张三"));
         String tableName = "READER_INFO_TEMP";
