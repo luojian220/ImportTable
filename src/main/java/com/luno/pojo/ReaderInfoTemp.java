@@ -1,14 +1,10 @@
 package com.luno.pojo;
 
-import java.util.Date;
-
 /**
  * Created by Administrator on 2016/9/20.
  */
 
-public class ReaderInfo {
-
-    private Long libid = 2060L;
+public class ReaderInfoTemp {
 
     private String certId;
 
@@ -20,22 +16,14 @@ public class ReaderInfo {
 
     private String name;
 
-    public ReaderInfo(){}
+    public ReaderInfoTemp(){}
 
-    public ReaderInfo(String certId, String readerType, String dept, String certFlag, String name) {
+    public ReaderInfoTemp(String certId, String readerType, String dept, String certFlag, String name) {
         this.certId = certId;
         this.readerType = readerType;
         this.dept = dept;
         this.certFlag = certFlag;
         this.name = name;
-    }
-
-    public Long getLibid() {
-        return libid;
-    }
-
-    public void setLibid(Long libid) {
-        this.libid = libid;
     }
 
     public String getCertId() {
@@ -82,8 +70,7 @@ public class ReaderInfo {
     @Override
     public String toString() {
         return "ReaderInfo{" +
-                "libid=" + libid +
-                ", certId='" + certId + '\'' +
+                ", cretId='" + certId + '\'' +
                 ", readerType='" + readerType + '\'' +
                 ", dept='" + dept + '\'' +
                 ", certFlag='" + certFlag + '\'' +
