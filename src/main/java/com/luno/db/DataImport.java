@@ -63,13 +63,13 @@ public class DataImport {
                 exeRowCounts ++;
                 if (cnt >= commitNum) {
                     dbUtils.commit();
-                    logger.info("处理记录总数:" + sourceRowCounts + ", 已处理:" + exeRowCounts + ",更新数量:" + updateRowCounts + ", 出错数量:" + exeErrorCounts);
+                    logger.info("处理记录总数:" + sourceRowCounts + ", 已处理:" + exeRowCounts + ",插入数量:" + (exeRowCounts - exeErrorCounts) + ", 出错数量:" + exeErrorCounts);
                     cnt = 0;
                 }
             }
             dbUtils.commit();
             dbUtils.close();
-            logger.info("处理记录总数:" + sourceRowCounts + ", 已处理:" + exeRowCounts + ",更新数量:" + updateRowCounts + ", 出错数量:" + exeErrorCounts);
+            logger.info("处理记录总数:" + sourceRowCounts + ", 已处理:" + exeRowCounts + ",插入数量:" + (exeRowCounts - exeErrorCounts)  + ", 出错数量:" + exeErrorCounts);
         }catch(Exception e) {
             e.printStackTrace();
             logger.error(tableName+"数据插入失败", e);

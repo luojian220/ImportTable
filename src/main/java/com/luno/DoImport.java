@@ -26,13 +26,18 @@ public class DoImport {
 	}
 
 	public static void doImport(){
-
+		//手动运行指定运行日期的文件
+		String runDate = "20160921" ;
 		//1.下载文件
-		FtpHelp.downFile("");
+		FtpHelp.downFile(runDate);
 
-		logger.info("开始导入馆藏信息");
-//		String bookFileName = WaiYuLibrary.getBookFileName();
-		String bookFileName = "D:\\ftp\\waiyu20160705.iso";
+		logger.info("========================开始导入馆藏信息===========================");
+		String bookFileName ;
+		if (StringUtils.isBlank(runDate)){
+			bookFileName = WaiYuLibrary.getBookFileName();
+		}else{
+			bookFileName = "D:\\ftp\\waiyu"+runDate+".iso";
+		}
 		logger.info("本次导入馆藏文件为："+bookFileName);
 		if (StringUtils.isNotBlank(bookFileName)){
 			String content = FileUtil.readString1(bookFileName);
@@ -40,21 +45,25 @@ public class DoImport {
 			DataImport dataImport = new DataImport();
 			dataImport.executeImport(isbnSet);
 		}
-		logger.info("导入馆藏信息完成");
+		logger.info("========================导入馆藏信息完成===========================");
 
-		/*logger.info("开始导入读者信息");
-		String readerFileName = WaiYuLibrary.getUserFileName();
-//		String readerFileName = "D:\\ftp\\20160918.users.waiyu.txt";
+		logger.info("========================开始导入读者信息===========================");
+		String readerFileName ;
+		if (StringUtils.isBlank(runDate)){
+			readerFileName = WaiYuLibrary.getUserFileName();
+		}else{
+			readerFileName = "D:\\ftp\\\"+runDate+\".users.waiyu.txt";
+		}
 		logger.info("本次导入馆藏文件为："+readerFileName);
-		if (StringUtils.isNotBlank(readerFileName)){
+		/*if (StringUtils.isNotBlank(readerFileName)){
 			String content = FileUtil.readString1(readerFileName);
 			List<Object> readerList = Generate.genReaderInfo(content);
 			DataImportUtils dataImportUtils = new DataImportUtils();
 			DbUtils dbUtils = new DbUtils(1626,"192.168.10.19","sxlib","apimanager","");
 			dataImportUtils.executeImport("READER_INFO",readerList,dbUtils);
 			dbUtils.close();
-		}
-		logger.info("导入读者信息完成");*/
+		}*/
+		logger.info("========================导入读者信息完成===========================");
 
 	}
 
