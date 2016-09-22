@@ -1,9 +1,6 @@
 package com.luno.utils;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 
 public class FileUtil {
 
@@ -23,15 +20,15 @@ public class FileUtil {
             }
             bos.close();
             inStream.close();
-            return bos.toString();   
-            // return new String(bos.toByteArray(),"UTF-8");       
+            return bos.toString();
+//            return new String(bos.toByteArray(),"UTF-8");
         }catch(IOException e){
         	return "";
         }
     }
 	
 	public static void main(String[] args) {
-		String s = readString1("D:\\ftp\\waiyu20160708.iso");
+		String s = readString1("D:\\导数\\湖北商贸学院\\湖北商贸2016最新教师读者证号2.txt");
 		
 		System.out.println(s);
 	}

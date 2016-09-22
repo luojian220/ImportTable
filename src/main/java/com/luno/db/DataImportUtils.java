@@ -49,7 +49,7 @@ public class DataImportUtils {
                     insertRowCounts ++;
                 }catch (SQLException e) {
                     //主键冲突 ，不需要再次插入
-                    e.printStackTrace();
+                    logger.error("数据"+ data +"插入出错："+e.getMessage());
                     exeErrorCounts ++;
                 }
                 cnt += 1;
@@ -64,8 +64,8 @@ public class DataImportUtils {
             dbUtils.commit();
             logger.info("处理记录总数:" + sourceRowCounts + ", 已处理:" + exeRowCounts + ", 插入数量:" + insertRowCounts + ", 出错数量:" + exeErrorCounts);
         }catch(Exception e) {
-            e.printStackTrace();
             logger.error(tableName+"数据插入失败", e);
+            logger.error(e.getMessage());
         }
 
     }

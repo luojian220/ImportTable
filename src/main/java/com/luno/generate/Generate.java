@@ -2,6 +2,7 @@ package com.luno.generate;
 
 import com.luno.pojo.ReaderInfo;
 import com.luno.pojo.ReaderInfoTemp;
+import com.luno.pojo.ReaderPwd;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -15,7 +16,10 @@ public class Generate {
 
     private static Logger logger = Logger.getLogger(Generate.class);
 
-    public static List<Object> genReaderInfo(String content){
+    public static final String TYPE_readerInfo = "readerInfo";
+    public static final String TYPE_readerPwd = "readerPwd";
+
+    public static List<Object> genReaderInfo(String content,Long libid){
         String cellSplit = "|";
         String rowSplit = "\n";
         List<Object> list = new ArrayList<>();
@@ -41,6 +45,7 @@ public class Generate {
                     }else if (i == 2) {
                         readerInfo.setDept(cell);
                     }
+                    readerInfo.setLibid(libid);
                 }
                 list.add(readerInfo );
             }
@@ -51,51 +56,72 @@ public class Generate {
         return list;
     }
 
-    public static List<Object> genReaderInfoTemp(String content){
+    /**
+     * 将字符串内容转换为读者对象
+     * @param content 字符串内容  格式为：姓名	读者证号	初始密码
+     * @param libid 图书馆id
+     * @param type  是readerInfo 还是 readerPwd
+     * @return
+     */
+    public static List<Object> genReaderInfoForTabTxt(String content,Long libid,String type){
 
-        String cellSplit = "|";
+        String cellSplit = "\t";
         String rowSplit = "\n";
         List<Object> list = new ArrayList<>();
         if (StringUtils.isBlank(content)){
             return null;
         }
-        if (content.indexOf("|") < 0 ){
+        if (content.indexOf(cellSplit) < 0 ){
             return null;
         }
         try{
             String[] readerArray =  content.split(rowSplit);
             for (String reader : readerArray) {
-                ReaderInfoTemp readerInfoTemp = new ReaderInfoTemp();
-                int start =0 ,end = 0 ;
-                for (int i =0 ;i < 15 ;i++){
-                    end = reader.indexOf("|",end + 1);
-                    String cell = reader.substring(start,end);
-                    start = end + 1;
-                    if (i == 0){
-                        readerInfoTemp.setCertId(cell);
-                    }else if (i == 1) {
-                        readerInfoTemp.setName(cell);
-                    }else if (i == 2) {
-                        readerInfoTemp.setDept(cell);
+                if (!reader.contains(cellSplit)) {
+                    logger.info("用户信息分隔符不正确："+reader);
+                    continue;
+                }
+                String[] cellArray = reader.split(cellSplit);
+                //姓名	读者证号	初始密码
+                if (cellArray.length == 3) {
+                    if (StringUtils.equalsIgnoreCase(type,TYPE_readerInfo)){
+                        ReaderInfo readerInfo = new ReaderInfo();
+                        readerInfo.setName(cellArray[0]);
+                        readerInfo.setCertId(cellArray[1]);
+                        readerInfo.setLibid(libid);
+                        list.add(readerInfo );
+                    }else if (StringUtils.equalsIgnoreCase(type,TYPE_readerPwd)){
+                        ReaderPwd readerPwd = new ReaderPwd();
+                        readerPwd.setCertId(cellArray[1]);
+                        readerPwd.setLibid(libid);
+                        readerPwd.setPassword(cellArray[2]);
+                        list.add(readerPwd );
                     }
                 }
-                list.add(readerInfoTemp );
             }
         }catch (Exception e){
             logger.error("根据文件内容生成读者信息异常：" + e.getMessage());
         }
-        logger.info("根据文件内容生成"+list.size()+"个读者信息"+list);
+        logger.info("根据文件内容生成"+list.size()+"个读者信息");
         return list;
     }
 
     public static void main(String[] args){
-        String content  = "LIBFOREIGN|外语学院馆|LIBILINK||外语学院馆||||0|0|LIBFO|20020826||0|外语大学馆|\n" +
+        /*String content  = "LIBFOREIGN|外语学院馆|LIBILINK||外语学院馆||||0|0|LIBFO|20020826||0|外语大学馆|\n" +
                 "XIAOQ|肖强|ADMIN||_系统维护||STAFF||0|0|55722324|20030313||0|外语大学馆|\n" +
                 "CHENBL|陈步苓|TJFSU||_流通主管||STAFF||0|0|511728|20030314||0|外语大学馆|\n" +
                 "ZHANGLI|张力|TJFSU||_编目主管||STAFF||0|0|23245575|20030314||0|外语大学馆|\n" +
                 "R120020301001|张滨江 (先生)|英语学院|先生|无效||||0|20131230|0000|20030711||0|外语大学馆|\n" +
                 "SILH|司丽慧 (女士)|TJFSU|女士|_流通人员2||STAFF||0|0|123456|20030827||0|外语大学馆|\n" +
                 "R1200600300001|史春英 (女士)|阿拉伯语系|女士|无效||||0|20131230|0000|20030830||0|外语大学馆|";
-        genReaderInfo(content);
+        genReaderInfo(content,2060l);*/
+
+        String content = "王仁祥\t1020150462\t888\n" +
+                "陈靓秋\t1020150203\t888\n" +
+                "吴俊\t1020150145\t888\n" +
+                "杨德刚\t1020150101\t888\n" +
+                "钱超\t1020150284\t888";
+        List<Object> readerInfoList = genReaderInfoForTabTxt(content,6001400L,"readerPwd");
+        logger.info(readerInfoList);
     }
 }
