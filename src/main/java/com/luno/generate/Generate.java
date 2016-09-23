@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * Created by Administrator on 2016/9/20.
+ * 根据文件内容，生成要插入表的对象集合
  */
 public class Generate {
 
@@ -36,7 +37,7 @@ public class Generate {
                 int start =0 ,end = 0 ;
                 for (int i =0 ;i < 15 ;i++){
                     end = reader.indexOf("|",end + 1);
-                    String cell = reader.substring(start,end);
+                    String cell = reader.substring(start,end).trim();
                     start = end + 1;
                     if (i == 0){
                         readerInfo.setCertId(cell);
@@ -86,15 +87,15 @@ public class Generate {
                 if (cellArray.length == 3) {
                     if (StringUtils.equalsIgnoreCase(type,TYPE_readerInfo)){
                         ReaderInfo readerInfo = new ReaderInfo();
-                        readerInfo.setName(cellArray[0]);
-                        readerInfo.setCertId(cellArray[1]);
+                        readerInfo.setName(cellArray[0].trim());
+                        readerInfo.setCertId(cellArray[1].trim());
                         readerInfo.setLibid(libid);
                         list.add(readerInfo );
                     }else if (StringUtils.equalsIgnoreCase(type,TYPE_readerPwd)){
                         ReaderPwd readerPwd = new ReaderPwd();
-                        readerPwd.setCertId(cellArray[1]);
+                        readerPwd.setCertId(cellArray[1].trim());
                         readerPwd.setLibid(libid);
-                        readerPwd.setPassword(cellArray[2]);
+                        readerPwd.setPassword(cellArray[2].trim());
                         list.add(readerPwd );
                     }
                 }
