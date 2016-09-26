@@ -122,7 +122,7 @@ public class Generate {
                 "吴俊\t1020150145\t888\n" +
                 "杨德刚\t1020150101\t888\n" +
                 "钱超\t1020150284\t888";
-        List<Object> readerInfoList = genReaderInfoForTabTxt(content,6001400L,"readerPwd");
+        List<Object> readerInfoList = genReaderInfoForTabTxt(content,6001400L,TYPE_readerPwd);
         logger.info(readerInfoList);
     }
 }

@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Set;
 
@@ -51,7 +52,7 @@ public class DataImport {
                 preparedStatement.setInt(3, 1);
                 preparedStatement.setInt(4, 0);
                 Date now = new Date();
-                preparedStatement.setDate(5, new java.sql.Date(now.getTime()));
+                preparedStatement.setTimestamp(5, (Timestamp) now);
                 try {
                     preparedStatement.execute();
                 }catch (SQLException e) {
