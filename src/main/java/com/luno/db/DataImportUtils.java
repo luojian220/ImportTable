@@ -43,6 +43,7 @@ public class DataImportUtils {
             for (Object data : dataList){
                 // 设置prepsetatment字段值
                 setPreparedStatementValue(preparedStatement,data);
+                sourceRowCounts ++;
                 try {
                     //执行插入
                     preparedStatement.execute();

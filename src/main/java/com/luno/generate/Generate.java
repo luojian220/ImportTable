@@ -84,20 +84,38 @@ public class Generate {
                 }
                 String[] cellArray = reader.split(cellSplit);
                 //姓名	读者证号	初始密码
-                if (cellArray.length == 3) {
-                    if (StringUtils.equalsIgnoreCase(type,TYPE_readerInfo)){
-                        ReaderInfo readerInfo = new ReaderInfo();
-                        readerInfo.setName(cellArray[0].trim());
-                        readerInfo.setCertId(cellArray[1].trim());
-                        readerInfo.setLibid(libid);
-                        list.add(readerInfo );
-                    }else if (StringUtils.equalsIgnoreCase(type,TYPE_readerPwd)){
-                        ReaderPwd readerPwd = new ReaderPwd();
-                        readerPwd.setCertId(cellArray[1].trim());
-                        readerPwd.setLibid(libid);
-                        readerPwd.setPassword(cellArray[2].trim());
-                        list.add(readerPwd );
-                    }
+                if (cellArray.length < 3){
+                    return null;
+                }
+                String name = "";
+                String certId = "";
+                String dept = "";
+                String password = "";
+                if (cellArray.length == 3){
+                    name = cellArray[0].trim();
+                    certId = cellArray[1].trim();
+                    password = cellArray[2].trim();
+                }else if (cellArray.length == 4){
+                    name = cellArray[0].trim();
+                    certId = cellArray[1].trim();
+                    dept = cellArray[2].trim();
+                    password = cellArray[3].trim();
+                }else{
+                    return null;
+                }
+                if (StringUtils.equalsIgnoreCase(type,TYPE_readerInfo)){
+                    ReaderInfo readerInfo = new ReaderInfo();
+                    readerInfo.setName(name);
+                    readerInfo.setCertId(certId);
+                    readerInfo.setDept(dept);
+                    readerInfo.setLibid(libid);
+                    list.add(readerInfo );
+                }else if (StringUtils.equalsIgnoreCase(type,TYPE_readerPwd)){
+                    ReaderPwd readerPwd = new ReaderPwd();
+                    readerPwd.setCertId(certId);
+                    readerPwd.setLibid(libid);
+                    readerPwd.setPassword(password);
+                    list.add(readerPwd );
                 }
             }
         }catch (Exception e){

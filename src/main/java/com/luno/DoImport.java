@@ -24,7 +24,7 @@ public class DoImport {
 
 		doImport();
 
-//		doImportTest();
+//		doImportReader();
 	}
 
 	public static void doImport(){
@@ -56,7 +56,7 @@ public class DoImport {
 		}else{
 			readerFileName = "D:\\ftp\\\"+runDate+\".users.waiyu.txt";
 		}
-		logger.info("本次导入馆藏文件为："+readerFileName);
+		logger.info("本次导入读者文件为："+readerFileName);
 		/*if (StringUtils.isNotBlank(readerFileName)){
 			String content = FileUtil.readString1(readerFileName);
 			List<Object> readerList = Generate.genReaderInfo(content,2060L);
@@ -69,16 +69,20 @@ public class DoImport {
 
 	}
 
-	public static void doImportTest(){
+	/**
+	 * 导入读者信息
+	 * txt文件导入， 姓名	借阅证号	部门	密码
+     */
+	public static void doImportReader(){
 
 		logger.info("========================开始导入读者信息===========================");
 
-		String readerFileName = "D:\\导数\\湖北商贸学院\\湖北商贸2016最新教师读者证号2.txt";
+		String readerFileName = "D:\\导数\\辽宁警察学院\\辽宁警察学院\\16新生学信上传20161020.txt";
 		logger.info("本次导入馆藏文件为："+readerFileName);
 		if (StringUtils.isNotBlank(readerFileName)){
 			String content = FileUtil.readString1(readerFileName);
-			List<Object> readerInfoList = Generate.genReaderInfoForTabTxt(content,6001400L,Generate.TYPE_readerInfo);
-			List<Object> readerPwdList = Generate.genReaderInfoForTabTxt(content,6001400L,Generate.TYPE_readerPwd);
+			List<Object> readerInfoList = Generate.genReaderInfoForTabTxt(content,1833L,Generate.TYPE_readerInfo);
+			List<Object> readerPwdList = Generate.genReaderInfoForTabTxt(content,1833L,Generate.TYPE_readerPwd);
 			DataImportUtils dataImportUtils = new DataImportUtils();
 			DbUtils dbUtils = new DbUtils(1626,"192.168.10.19","sxlib","apimanager","dfdre$da0cber42Odc");
 			dataImportUtils.executeImport("READER_INFO",readerInfoList,dbUtils);
