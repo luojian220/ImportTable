@@ -22,14 +22,16 @@ public class DoImport {
 
 	public static void main(String[] args){
 
-		doImport();
+//		doImport();
 
 //		doImportReader();
+
+		doImportLibBookNum();
 	}
 
 	public static void doImport(){
 		//手动运行指定运行日期的文件
-		String runDate = "20160921" ;
+		String runDate = "20161020" ;
 		//1.下载文件
 		FtpHelp.downFile(runDate);
 
@@ -90,6 +92,28 @@ public class DoImport {
 			dbUtils.close();
 		}
 		logger.info("========================导入读者信息完成===========================");
+
+	}
+
+	/**
+	 * 导入馆藏信息
+	 * txt文件导入， 姓名	借阅证号	部门	密码
+	 */
+	public static void doImportLibBookNum(){
+
+		logger.info("========================开始导入馆藏信息===========================");
+
+		String bookFileName = "D:\\导数\\齐鲁师范学院\\齐鲁师范学院馆藏.txt";
+		logger.info("本次导入馆藏文件为："+bookFileName);
+		if (StringUtils.isNotBlank(bookFileName)){
+			String content = FileUtil.readString1(bookFileName);
+			List<Object> libBookNumList = Generate.genLibBookNumForTabTxt(content,301448L);
+			DataImportUtils dataImportUtils = new DataImportUtils();
+			DbUtils dbUtils = new DbUtils(1626,"192.168.10.19","sxlib","apimanager","dfdre$da0cber42Odc");
+			dataImportUtils.executeImport("LIB_BOOK_NUMS",libBookNumList,dbUtils);
+			dbUtils.close();
+		}
+		logger.info("========================导入馆藏信息完成===========================");
 
 	}
 

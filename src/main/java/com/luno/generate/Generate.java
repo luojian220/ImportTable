@@ -1,5 +1,6 @@
 package com.luno.generate;
 
+import com.luno.pojo.LibBookNum;
 import com.luno.pojo.ReaderInfo;
 import com.luno.pojo.ReaderInfoTemp;
 import com.luno.pojo.ReaderPwd;
@@ -122,6 +123,48 @@ public class Generate {
             logger.error("根据文件内容生成读者信息异常：" + e.getMessage());
         }
         logger.info("根据文件内容生成"+list.size()+"个读者信息");
+        return list;
+    }
+
+    /**
+     * 将字符串转换成表LibBookNum中对应的字段 格式为 isbn	纸质书数量
+     * @param content
+     * @param libid
+     * @return
+     */
+    public static List<Object> genLibBookNumForTabTxt(String content,Long libid){
+        String cellSplit = "\t";
+        String rowSplit = "\n";
+        List<Object> list = new ArrayList<>();
+        if (StringUtils.isBlank(content)){
+            return null;
+        }
+        try{
+            String[] rowArray =  content.split(rowSplit);
+            for (String row : rowArray) {
+                if (!row.contains(cellSplit)) {
+                    logger.info("用户信息分隔符不正确："+row);
+                    continue;
+                }
+                String[] cellArray = row.split(cellSplit);
+                //isbn	纸质书数量
+                if (cellArray.length != 2){
+                    logger.info("行分隔后列数不正确："+row);
+                    continue;
+                }
+                LibBookNum libBookNum = new LibBookNum();
+                String isbn = cellArray[0].trim();
+                Integer Pbooknum = Integer.parseInt(cellArray[1].trim());
+                libBookNum.setLibid(libid);
+                libBookNum.setIsbn(isbn);
+                libBookNum.setPbooknum(Pbooknum);
+                libBookNum.setEbooknum(0);
+                list.add(libBookNum);
+            }
+        }catch (Exception e){
+            logger.error("根据文件内容生成馆藏信息异常：" + e.getMessage());
+        }
+        logger.info("根据文件内容生成"+list.size()+"个馆藏信息");
         return list;
     }
 

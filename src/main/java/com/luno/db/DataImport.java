@@ -52,7 +52,7 @@ public class DataImport {
                 preparedStatement.setInt(3, 1);
                 preparedStatement.setInt(4, 0);
                 Date now = new Date();
-                preparedStatement.setTimestamp(5, (Timestamp) now);
+                preparedStatement.setTimestamp(5, new Timestamp(now.getTime()));
                 try {
                     preparedStatement.execute();
                 }catch (SQLException e) {
