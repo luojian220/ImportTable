@@ -31,7 +31,7 @@ public class DataImportUtils {
         int insertRowCounts = 0;
         int exeErrorCounts = 0;
         int cnt = 0;
-        int commitNum = 1000;
+        int commitNum = 10000;
         if (dataList == null || StringUtils.isBlank(tableName) || dataList.size() == 0){
             logger.error("传入的table对象不正确...");
         }

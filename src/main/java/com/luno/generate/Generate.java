@@ -154,10 +154,16 @@ public class Generate {
                 }
                 LibBookNum libBookNum = new LibBookNum();
                 String isbn = cellArray[0].trim();
-                Integer Pbooknum = Integer.parseInt(cellArray[1].trim());
+                Integer pbooknum;
+                try {
+                    pbooknum = Integer.parseInt(cellArray[1].trim());
+                }catch (NumberFormatException e){
+                    logger.info("纸质书数量转化出错" + cellArray[1].trim());
+                    pbooknum = 1;
+                }
                 libBookNum.setLibid(libid);
                 libBookNum.setIsbn(isbn);
-                libBookNum.setPbooknum(Pbooknum);
+                libBookNum.setPbooknum(pbooknum);
                 libBookNum.setEbooknum(0);
                 list.add(libBookNum);
             }

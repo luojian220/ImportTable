@@ -79,12 +79,12 @@ public class DoImport {
 
 		logger.info("========================开始导入读者信息===========================");
 
-		String readerFileName = "D:\\导数\\辽宁警察学院\\辽宁警察学院\\16新生学信上传20161020.txt";
+		String readerFileName = "D:\\导数\\河池学院\\河池学院读者20161031.txt";
 		logger.info("本次导入馆藏文件为："+readerFileName);
 		if (StringUtils.isNotBlank(readerFileName)){
 			String content = FileUtil.readString1(readerFileName);
-			List<Object> readerInfoList = Generate.genReaderInfoForTabTxt(content,1833L,Generate.TYPE_readerInfo);
-			List<Object> readerPwdList = Generate.genReaderInfoForTabTxt(content,1833L,Generate.TYPE_readerPwd);
+			List<Object> readerInfoList = Generate.genReaderInfoForTabTxt(content,1487L,Generate.TYPE_readerInfo);
+			List<Object> readerPwdList = Generate.genReaderInfoForTabTxt(content,1487L,Generate.TYPE_readerPwd);
 			DataImportUtils dataImportUtils = new DataImportUtils();
 			DbUtils dbUtils = new DbUtils(1626,"192.168.10.19","sxlib","apimanager","dfdre$da0cber42Odc");
 			dataImportUtils.executeImport("READER_INFO",readerInfoList,dbUtils);
@@ -97,17 +97,17 @@ public class DoImport {
 
 	/**
 	 * 导入馆藏信息
-	 * txt文件导入， 姓名	借阅证号	部门	密码
+	 * txt文件导入，  isbn	纸质书数量
 	 */
 	public static void doImportLibBookNum(){
 
 		logger.info("========================开始导入馆藏信息===========================");
 
-		String bookFileName = "D:\\导数\\齐鲁师范学院\\齐鲁师范学院馆藏.txt";
+		String bookFileName = "D:\\导数\\河池学院\\河池学院馆藏20161031.txt";
 		logger.info("本次导入馆藏文件为："+bookFileName);
 		if (StringUtils.isNotBlank(bookFileName)){
 			String content = FileUtil.readString1(bookFileName);
-			List<Object> libBookNumList = Generate.genLibBookNumForTabTxt(content,301448L);
+			List<Object> libBookNumList = Generate.genLibBookNumForTabTxt(content,1487L);
 			DataImportUtils dataImportUtils = new DataImportUtils();
 			DbUtils dbUtils = new DbUtils(1626,"192.168.10.19","sxlib","apimanager","dfdre$da0cber42Odc");
 			dataImportUtils.executeImport("LIB_BOOK_NUMS",libBookNumList,dbUtils);
