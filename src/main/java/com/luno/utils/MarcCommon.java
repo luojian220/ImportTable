@@ -21,7 +21,7 @@ public class MarcCommon {
     private final static char FLDEND = (char)30; // 字段结束符
     private final static char RECEND = (char)29; // 记录结束符
     private final static char SUBFLD = (char)31; // 子字段指示符
-    
+
     public static List<BookMarcDTO> getMarcInfo(String str) {
 		List<BookMarcDTO> list = new ArrayList<BookMarcDTO>();
 
@@ -32,6 +32,9 @@ public class MarcCommon {
 			while (count * 12 + 2 <= dateLength) {
 				BookMarcDTO marc = new BookMarcDTO();
 				// 通过3、4、5组成的数据解析出该字段所存储的数据
+				if (str.length() <= count * 12 + 3){
+					break;
+				}
 				String field = getStr(bytes, count * 12, 3);// 三位代表字段编号
 				if(field.equals("010")){
 					int length = Integer.parseInt(getStr(bytes, count * 12 + 3, 4));// 四位代表该字段数据长度
@@ -52,7 +55,7 @@ public class MarcCommon {
 					break;
 				}
 				count++;
-				
+
 			}
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
@@ -75,7 +78,7 @@ public class MarcCommon {
     	BookMarcDTO book ;
     	try {
      		String[] ss = content.split(String.valueOf(RECEND));
-     		
+
     		List<BookMarcDTO> bookList = null;
     		for (String s : ss){
 				bookList = getMarcInfo(s);
